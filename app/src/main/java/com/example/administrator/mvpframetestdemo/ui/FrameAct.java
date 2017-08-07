@@ -18,7 +18,7 @@ public class FrameAct extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_activity);
 
-        TextView frameView = (TextView) findViewById(R.id.frame_actview);
         // url = "https://api.douban.com/v2/book/search?q=金瓶梅&tag=&start=0&count=1";
+        TextView frameView = (TextView) findViewById(R.id.frame_actview);
     }
 }
