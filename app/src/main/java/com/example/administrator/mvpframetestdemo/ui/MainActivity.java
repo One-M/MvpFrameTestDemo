@@ -12,14 +12,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_lay);
 
 
-        findViewById(R.id.to_new_view).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.to_next_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, FrameAct.class));
             }
         });
+
+        findViewById(R.id.to_retrofit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this , RetrofitActivity.class));
+            }
+        });
+
     }
 }

@@ -8,13 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.example.administrator.mvpframetestdemo.R;
-import com.example.administrator.mvpframetestdemo.service.mvpframedemo.FirstFragment;
+import com.example.administrator.mvpframetestdemo.service.retrofittest.GetRequestFragment;
 
 /**
- * Created by：XQyi on 2017/8/7 18:32
- * Use:
+ * Created by Poison_Y on 2017/8/28.
+ * mail : yixiaoqiang1120@163.com
+ * description:
  */
-public class FrameAct extends FragmentActivity {
+
+public class RetrofitActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class FrameAct extends FragmentActivity {
 //        TextView frameView = (TextView) findViewById(R.id.frame_actview);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        FirstFragment fragment = new FirstFragment();
+        GetRequestFragment fragment = new GetRequestFragment();
         fragmentTransaction.add(R.id.data_fragment, fragment);
         fragmentTransaction.commit();
     }
