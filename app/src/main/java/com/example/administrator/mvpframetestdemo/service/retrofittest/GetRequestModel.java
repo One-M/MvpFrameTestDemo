@@ -1,7 +1,6 @@
 package com.example.administrator.mvpframetestdemo.service.retrofittest;
 
 import com.example.administrator.mvpframetestdemo.retrofitrealize.GetRequestInterface;
-import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.Translation;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.TranslationPost;
 import com.example.administrator.mvpframetestdemo.service.RequestListener;
 import com.example.administrator.mvpframetestdemo.util.OkHttpClientUtil;
