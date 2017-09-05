@@ -2,9 +2,14 @@ package com.example.administrator.mvpframetestdemo.util;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,6 +37,16 @@ public class OkHttpClientUtil {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         //OkHttp进行添加拦截器loggingInterceptor
         httpClient.addInterceptor(httpLoggingInterceptor);
+        //拦截http请求进行监控  ps:一个典型应用场景是所有http请求需要加上api key,在Retrofit2之前，可以通过RequestInterceptor实现：
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                HttpUrl url = request.url().newBuilder().addQueryParameter("" , "").build();
+                request = request.newBuilder().url(url).build();
+                return chain.proceed(request);
+            }
+        });
 
         return httpClient.build();
     }
