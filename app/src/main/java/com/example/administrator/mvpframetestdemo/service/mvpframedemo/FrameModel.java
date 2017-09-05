@@ -8,7 +8,7 @@ import com.example.administrator.mvpframetestdemo.service.RequestListener;
  * mail : yixiaoqiang1120@163.com
  */
 
-public class FrameModel implements FrameContract.FirstFrameModel {
+public class FrameModel extends FrameContract.FirstFrameModel {
     @Override
     public void loadDataModel(String url, RequestListener requestListener) {
         requestListener.onSuccess(url);

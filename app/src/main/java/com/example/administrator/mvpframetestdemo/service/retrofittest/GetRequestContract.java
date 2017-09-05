@@ -14,12 +14,12 @@ import com.example.administrator.mvpframetestdemo.service.RequestListener;
 public interface GetRequestContract {
 
     interface GetRequestContractView extends BaseView{
-        void successLoad(Object o);
-        void failLoad();
+         void successLoad(Object o);
+         void failLoad();
     }
 
-    interface GetRequestContractModel extends BaseModel{
-        void retrofitLoad(String url , RequestListener requestListener);
+    abstract class GetRequestContractModel extends BaseModel{
+        abstract void retrofitLoad(String url , RequestListener requestListener);
     }
 
     abstract class GetRequestContractPresenter extends BasePresenter<GetRequestContractModel , GetRequestContractView>{

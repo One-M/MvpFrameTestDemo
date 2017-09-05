@@ -12,10 +12,17 @@ import android.widget.TextView;
 import com.example.administrator.mvpframetestdemo.R;
 import com.example.administrator.mvpframetestdemo.service.BaseFragment;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -84,7 +91,8 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
                 initData();
                 break;
             case R.id.rxjava_data:
-                rxJavaTest6();
+//                rxJavaTest8();
+                rxJavaFlowable1();
                 break;
         }
     }
@@ -235,6 +243,7 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
     }
     /**zip*/
     private void rxJavaTest6(){
+
         Observable<Integer> observable1 = Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Integer> emitter) throws Exception {
@@ -306,5 +315,116 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
                 Log.d(TAG, "onError");
             }
         });
+    }
+    /**OOM手动处理*/
+    private void rxJavaTest7(){
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<Integer> e) throws Exception {
+                for (int i = 0;  ; i++) { //无限循环（制造OOM）
+                    e.onNext(i);
+                    /**处理方法一 每次发送完事件延时2秒*/
+                    Thread.sleep(2000);
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                /**处理方法二 filter 过滤器（只有被100整除的数才通过）*/
+//            .filter(new Predicate<Integer>() {
+//                @Override
+//                public boolean test(@NonNull Integer integer) throws Exception {
+//                    return integer % 100 == 0;
+//                }
+//            })
+                /**处理方法三 sample 每隔指定的时间就从上游中取出一个事件发送给下游*/
+//                .sample(2 , TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "" + integer);
+                    }
+                });
+
+    }
+    /**解决OOM 的zip*/
+    private void rxJavaTest8(){
+        Observable<Integer> observable1 = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<Integer> e) throws Exception {
+                for (int i = 0;  ; i++) { //无限循环（制造OOM）
+                    e.onNext(i);
+                    Thread.sleep(2000);  //发送事件之后延时2秒
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+//                .sample(2 , TimeUnit.SECONDS)
+                ;
+        Observable<String> observable2 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                e.onNext("A");
+            }
+        }).subscribeOn(Schedulers.io());
+
+        Observable.zip(observable1, observable2, new BiFunction<Integer, String, String>() {
+            @Override
+            public String apply(@NonNull Integer integer, @NonNull String s) throws Exception {
+                return integer + s;
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.w(TAG, throwable);
+                    }
+                });
+    }
+
+    /**Flowable
+     * 上游变成了Flowable, 下游变成了Subscriber, 但是水管之间的连接还是通过subscribe()*/
+    private void rxJavaFlowable1() {
+        //基本的用法
+        Flowable<Integer> flowable = Flowable.create(new FlowableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull FlowableEmitter<Integer> integer) throws Exception {
+                Log.d(TAG, "emit 1");
+                integer.onNext(1);
+                Log.d(TAG, "emit 2");
+                integer.onNext(2);
+                Log.d(TAG, "emit 3");
+                integer.onNext(3);
+                Log.d(TAG, "emit complete");
+                integer.onComplete();
+            }
+        }, BackpressureStrategy.ERROR);//这个参数用来选择背压
+
+        Subscriber<Integer> downstream  = new Subscriber<Integer>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+                Log.d(TAG, "onSubscribe");
+                s.request(Long.MAX_VALUE);  //注意这句代码 Flowable在设计的时候采用了一种新的思路也就是响应式拉取(这里必须告诉上游需要的数据条数)
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                Log.d(TAG, "onNext: " + integer);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.w(TAG, "onError: ", t);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete");
+            }
+        };
+        flowable.subscribe(downstream);
     }
 }

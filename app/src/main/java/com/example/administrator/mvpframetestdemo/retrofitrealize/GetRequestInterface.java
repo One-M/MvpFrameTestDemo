@@ -3,6 +3,9 @@ package com.example.administrator.mvpframetestdemo.retrofitrealize;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.Translation;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.TranslationPost;
 
+import java.util.Observer;
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -37,6 +40,13 @@ public interface GetRequestInterface {
     @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
     @FormUrlEncoded
     Call<TranslationPost> postCall(@Field("i") String i);
+
+    @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
+    @FormUrlEncoded
+    Observable<TranslationPost> postRxCall(@Field("i") String i);
+
+    @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
+    Observable<TranslationPost> getBookDatas(@Query("i") String stri);
 
 
 }

@@ -17,9 +17,9 @@ public interface FrameContract {
         void loadTokenLose();
     }
 
-    interface FirstFrameModel extends BaseModel{
+    abstract class FirstFrameModel extends BaseModel{
 
-        void loadDataModel(String url , RequestListener requestListener);
+        abstract void loadDataModel(String url , RequestListener requestListener);
 
     }
     abstract class FirstFramePresenter extends BasePresenter<FirstFrameModel , FirstFrameView>{
