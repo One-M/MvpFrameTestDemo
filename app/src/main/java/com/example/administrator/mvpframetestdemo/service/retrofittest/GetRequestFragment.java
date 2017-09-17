@@ -1,6 +1,7 @@
 package com.example.administrator.mvpframetestdemo.service.retrofittest;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -8,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mvpframetestdemo.R;
 import com.example.administrator.mvpframetestdemo.service.BaseFragment;
+import com.example.administrator.mvpframetestdemo.util.ToastUtil;
+import com.example.administrator.mvpframetestdemo.util.ToastUtils;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -61,6 +65,8 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
         mFirstDatas.setOnClickListener(this);
         mView.findViewById(R.id.rxjava_data).setOnClickListener(this);
 
+        mView.findViewById(R.id.toast_utils).setOnClickListener(this);
+
         mDetailsTxt = mView.findViewById(R.id.retrofit_data);
     }
 
@@ -94,7 +100,36 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
 //                rxJavaTest8();
                 rxJavaFlowable1();
                 break;
+            case R.id.toast_utils:
+                IToast();
+                break;
         }
+    }
+
+    /**原生*/
+    private void ptotogenesisToast(){
+        Log.d("toast == " , "makeText");
+        Toast.makeText(getActivity(), "makeText", Toast.LENGTH_SHORT).show();
+    }
+
+    private void UtilsToast(){
+//        ToastUtils.showToast(getContext() , "UtilsToast" , Toast.LENGTH_SHORT);
+
+        ToastUtils.getMainThreadHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtils.showToast(getContext() , "UtilsToastHandler" , Toast.LENGTH_SHORT);
+            }
+        });
+    }
+    private void IToast(){
+//        IToast.show("我是自定义的toast");
+        ToastUtil toastUtil = new ToastUtil();
+        toastUtil.Short(getContext() , "自定义message字体、背景色").setToastColor(Color.WHITE , getResources().getColor(R.color.yellow_verify_code)).show();
+
+        /**自定义布局*/
+//        View view = LayoutInflater.from(getContext()).inflate(R.layout.i_toast_view,null);
+//        new ToastUtil(getContext() , view  , Toast.LENGTH_SHORT).show();
     }
 
     private String TAG = "RxJavaLog==>> ";
