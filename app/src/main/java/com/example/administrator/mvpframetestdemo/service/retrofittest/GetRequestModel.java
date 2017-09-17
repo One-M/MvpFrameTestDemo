@@ -1,6 +1,7 @@
 package com.example.administrator.mvpframetestdemo.service.retrofittest;
 
 import com.example.administrator.mvpframetestdemo.retrofitrealize.GetRequestInterface;
+import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.LeagueHeaderBean;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.TranslationPost;
 import com.example.administrator.mvpframetestdemo.service.RequestListener;
 import com.example.administrator.mvpframetestdemo.util.OkHttpClientUtil;
@@ -12,9 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.subscriptions.ArrayCompositeSubscription;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -37,7 +36,8 @@ public class GetRequestModel extends GetRequestContract.GetRequestContractModel 
         //to retrofit load
 //        request(requestListener);
 //        retrofitRx(requestListener);
-        retrofitRx2(requestListener);
+//        retrofitRx2(requestListener);
+        retrofitRx3(requestListener);
 
     }
 
@@ -158,6 +158,35 @@ public class GetRequestModel extends GetRequestContract.GetRequestContractModel 
             @Override
             public void onComplete() {
                 //请求完成
+            }
+        });
+    }
+    private void retrofitRx3(final RequestListener requestListener){
+        GetRequestInterface getRequestInterface = mRetrofit.create(GetRequestInterface.class);
+        Observable<LeagueHeaderBean> observable = getRequestInterface.getLeagueHeader("zh" , "8" ,"0","60");
+        toSubscribe(observable, new Observer<LeagueHeaderBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull LeagueHeaderBean leagueHeaderBean) {
+                //请求成功
+                System.out.println("请求成功 ==>> " + leagueHeaderBean.getLeagueName());
+                requestListener.onSuccess(leagueHeaderBean.getLeagueName());
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                //请求出错
+                System.out.println("请求失败");
+                requestListener.onError();
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

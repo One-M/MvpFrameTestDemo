@@ -1,25 +1,12 @@
 package com.example.administrator.mvpframetestdemo.service;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import java.util.concurrent.TimeUnit;
+import com.example.administrator.mvpframetestdemo.util.OkHttpClientUtil;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by：XQyi on 2017/8/7
@@ -34,18 +21,20 @@ public abstract class BaseModel {
     public BaseModel(){
 
         if (mRetrofit == null) {
-            OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-            builder.readTimeout(DEFAULT_TIME , TimeUnit.SECONDS);
-            builder.connectTimeout(DEFAULT_TIME , TimeUnit.SECONDS);
-            builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+//            OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+//            builder.readTimeout(DEFAULT_TIME , TimeUnit.SECONDS);
+//            builder.connectTimeout(DEFAULT_TIME , TimeUnit.SECONDS);
+//            builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+//            OkHttpClient okHttpClient = builder.build();
 
-            OkHttpClient okHttpClient = builder.build();
-            mRetrofit = new Retrofit.Builder()
-                    .baseUrl("http://fanyi.youdao.com/")
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
+//            mRetrofit = new Retrofit.Builder()
+//                    .baseUrl("http://fanyi.youdao.com/")
+//                    .client(OkHttpClientUtil.getOkHttpClient())
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                    .build();
+            String url = "http://m.1332255.com:81";
+            mRetrofit = OkHttpClientUtil.getRetrofit(url);
         }
 
     }

@@ -1,9 +1,8 @@
 package com.example.administrator.mvpframetestdemo.retrofitrealize;
 
+import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.LeagueHeaderBean;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.Translation;
 import com.example.administrator.mvpframetestdemo.retrofitrealize.bean.TranslationPost;
-
-import java.util.Observer;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -12,7 +11,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -48,5 +46,11 @@ public interface GetRequestInterface {
     @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
     Observable<TranslationPost> getBookDatas(@Query("i") String stri);
 
-
+    // http://m.1332255.com:81/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do?lang=zh&timeZone=8&type=0&leagueId=60
+//    @GET("http://m.13322.com/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do")//这里填完成的url可以替代baseurl里面的设置的url
+    @GET("/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do")
+    Observable<LeagueHeaderBean> getLeagueHeader(@Query("lang") String lang,
+                                                 @Query("timeZone") String timeZone,
+                                                 @Query("type") String type,
+                                                 @Query("leagueId") String leagueId);
 }

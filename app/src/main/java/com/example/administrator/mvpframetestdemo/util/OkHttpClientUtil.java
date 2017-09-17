@@ -2,8 +2,9 @@ package com.example.administrator.mvpframetestdemo.util;
 
 import android.util.Log;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -49,6 +50,18 @@ public class OkHttpClientUtil {
         });
 
         return httpClient.build();
+    }
+
+    public static Retrofit getRetrofit(String currUrl){
+        Retrofit retrofit = new Retrofit.Builder()
+//                            .baseUrl("http://fanyi.youdao.com/")
+                            .baseUrl(currUrl)
+                            .client(OkHttpClientUtil.getOkHttpClient())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                            .build();
+
+        return retrofit;
     }
 
 //    private static Retrofit create() {
