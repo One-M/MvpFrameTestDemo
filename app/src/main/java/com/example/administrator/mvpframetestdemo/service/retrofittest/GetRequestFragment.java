@@ -175,15 +175,15 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
             }
         });
         View view = snackbar.getView();
-        view.setBackgroundColor(Color.RED);
+        view.setBackgroundColor(Color.YELLOW);
 
         TextView textView = view.findViewById(R.id.snackbar_text);
-        textView.setTextColor(Color.GREEN);
+        textView.setTextColor(Color.RED);
         Drawable drawable = ContextCompat.getDrawable(getContext() , R.mipmap.toast_imgs);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(drawable , null , null , null);
         textView.setGravity(Gravity.CENTER);
-        snackbar.setActionTextColor(Color.YELLOW).show();
+        snackbar.setActionTextColor(Color.BLUE).show();
 
 
     }
