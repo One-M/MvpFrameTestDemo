@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
-
-    <TextView
-        android:id="@+id/first_datas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="qwer_****_qwer"/>
-
-    <TextView
-        android:id="@+id/first_data_details"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:gravity="center"
-        android:text="--"/>
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/first_datas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="qwer_****_qwer"/>
 
-    <TextView
-        android:id="@+id/retrofit_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:gravity="center"
-        android:text="--"/>
+        <TextView
+            android:id="@+id/first_data_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:text="--"/>
 
-    <TextView
-        android:id="@+id/rxjava_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:gravity="center"
-        android:text="RxJava"/>
+        <TextView
+            android:id="@+id/retrofit_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:text="--"/>
 
-    <TextView
-        android:id="@+id/toast_utils"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:gravity="center"
-        android:text="toast"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/rxjava_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:text="RxJava"/>
+
+        <TextView
+            android:id="@+id/toast_utils"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:text="toast"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

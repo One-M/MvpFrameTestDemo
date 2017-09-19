@@ -2,9 +2,14 @@ package com.example.administrator.mvpframetestdemo.service.retrofittest;
 
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +56,7 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
 
     private View mView;
     private TextView mDetailsTxt;
+    private CoordinatorLayout coordinatorLayout;
 
     @Nullable
     @Override
@@ -68,6 +74,8 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
         mView.findViewById(R.id.toast_utils).setOnClickListener(this);
 
         mDetailsTxt = mView.findViewById(R.id.retrofit_data);
+
+        coordinatorLayout = mView.findViewById(R.id.container);
     }
 
     private void initData(){
@@ -101,7 +109,7 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
                 rxJavaFlowable1();
                 break;
             case R.id.toast_utils:
-                IToast();
+                setSnackbar();
                 break;
         }
     }
@@ -122,14 +130,62 @@ public class GetRequestFragment extends BaseFragment<GetRequestPresenter , GetRe
             }
         });
     }
-    private void IToast(){
+
+    ToastUtil toastUtil = new ToastUtil();//直接生成当前toast(避免二次显示toast时延时过长)
+    int i = 0;
+    private void IToast(int num){
 //        IToast.show("我是自定义的toast");
-        ToastUtil toastUtil = new ToastUtil();
-        toastUtil.Short(getContext() , "自定义message字体、背景色").setToastColor(Color.WHITE , getResources().getColor(R.color.yellow_verify_code)).show();
+
+//        toastUtil.Short(getContext() , "自定义message字体、背景色").setToastColor(Color.WHITE , getResources().getColor(R.color.yellow_verify_code)).show();
+        toastUtil.Short(getContext() , "自定义drawable的Toast " + num).setToastBackground(Color.WHITE , R.drawable.toast_shape).show();
 
         /**自定义布局*/
-//        View view = LayoutInflater.from(getContext()).inflate(R.layout.i_toast_view,null);
-//        new ToastUtil(getContext() , view  , Toast.LENGTH_SHORT).show();
+        /*View view = LayoutInflater.from(getContext()).inflate(R.layout.i_toast_view,null);
+        new ToastUtil(getContext() , view  , Toast.LENGTH_SHORT).show();*/
+
+    }
+
+    private void setSnackbar(){
+        /*Snackbar.make(coordinatorLayout , "Snackbar" , Snackbar.LENGTH_SHORT).setAction("ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }).setCallback(new Snackbar.Callback(){
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                super.onDismissed(transientBottomBar, event);
+                // Snackbar关闭时回调
+                Log.d("Snackbar==>> " , "关闭");
+            }
+
+            @Override
+            public void onShown(Snackbar sb) {
+                super.onShown(sb);
+                // Snackbar打开时回调
+                Log.d("Snackbar==>> " , "打开");
+            }
+        }).setActionTextColor(Color.YELLOW).show();*/
+
+        Snackbar snackbar = Snackbar.make(coordinatorLayout , "新的Snackbar" , Snackbar.LENGTH_SHORT);
+        snackbar.setAction("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        View view = snackbar.getView();
+        view.setBackgroundColor(Color.RED);
+
+        TextView textView = view.findViewById(R.id.snackbar_text);
+        textView.setTextColor(Color.GREEN);
+        Drawable drawable = ContextCompat.getDrawable(getContext() , R.mipmap.toast_imgs);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable , null , null , null);
+        textView.setGravity(Gravity.CENTER);
+        snackbar.setActionTextColor(Color.YELLOW).show();
+
+
     }
 
     private String TAG = "RxJavaLog==>> ";

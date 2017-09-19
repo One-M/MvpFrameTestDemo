@@ -86,6 +86,7 @@ public class ToastUtil {
      * 短时间显示Toast
      */
     public  ToastUtil Short(Context context, CharSequence message){
+
         if(toast==null||(toastView!=null&&toastView.getChildCount()>1)){
             toast= Toast.makeText(context, message, Toast.LENGTH_SHORT);
             toastView=null;
@@ -93,6 +94,13 @@ public class ToastUtil {
             toast.setText(message);
             toast.setDuration(Toast.LENGTH_SHORT);
         }
+
+//        if (toast == null) {
+//            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+//        } else {
+//            toast.setText(message);
+//            toast.setDuration(Toast.LENGTH_SHORT);
+//        }
         return this;
     }
 
