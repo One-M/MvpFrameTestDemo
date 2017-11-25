@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         >
         <Button
-            android:id="@+id/to_next_view"
+            android:id="@+id/start_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TO_NEW_VIEW"
+            android:text="start_service"
             />
     </LinearLayout>
     <LinearLayout
@@ -22,23 +21,10 @@
         android:gravity="center"
         >
         <Button
-            android:id="@+id/to_retrofit"
+            android:id="@+id/stop_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="to_retrofit"
+            android:text="stop_service"
             />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-        <Button
-            android:id="@+id/to_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="to_service"
-            />
-    </LinearLayout>
-
 </LinearLayout>
