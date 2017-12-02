@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/basics_string_logA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="string_log"
+            />
+        <Button
+            android:id="@+id/basics_string_logB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="string_log"
+            />
+        <Button
+            android:id="@+id/basics_handler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="basics_handler"
+            />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

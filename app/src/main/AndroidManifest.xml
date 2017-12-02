@@ -29,6 +29,9 @@
         <activity android:name="com.example.administrator.mvpframetestdemo.ui.ServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name="com.example.administrator.mvpframetestdemo.ui.BasicsTestActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <service android:name="com.example.administrator.mvpframetestdemo.service.servicetest.MyService"/>
     </application>
 
